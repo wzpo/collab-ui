@@ -27,8 +27,10 @@ import Modal from './lib/modal/examples/index.js';
 import Popover from './lib/popover/examples/index.js';
 import Radio from './lib/radio/examples/index.js';
 import Select from './lib/select/examples/index.js';
+import Slider from './lib/slider/examples/index.js';
 import Spinner from './lib/spinner/examples/index.js';
 import Tabs from './lib/tabs/examples/index.js';
+import TimePicker from './lib/time-picker/examples/index.js';
 import ToggleSwitch from './lib/toggle-switch/examples/index.js';
 import Tooltip from './lib/tooltip/examples/index.js';
 
@@ -60,8 +62,10 @@ const examples = [
   Popover,
   Radio,
   Select,
+  Slider,
   Spinner,
   Tabs,
+  TimePicker,
   ToggleSwitch,
   Tooltip
 ];

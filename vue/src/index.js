@@ -50,12 +50,17 @@ import Radio from '../src/lib/radio/index.js';
 import RadioGroup from '../src/lib/radio-group/index.js';
 import Select from '../src/lib/select/index.js';
 import SelectOption from '../src/lib/select-option/index.js';
+import Slider from '../src/lib/slider/index.js';
+import SliderPointer from '../src/lib/slider-pointer/index.js';
 import Spinner from '../src/lib/spinner/index.js';
 import Tab from '../src/lib/tab/index.js';
 import TabContent from '../src/lib/tab-content/index.js';
 import TabList from '../src/lib/tab-list/index.js';
 import TabPane from '../src/lib/tab-pane/index.js';
 import Tabs from '../src/lib/tabs/index.js';
+import TimePicker from '../src/lib/time-picker/index.js';
+import TimePickerDropdown from '../src/lib/time-picker-dropdown/index.js';
+import TimeSelector from '../src/lib/time-selector/index.js';
 import ToggleSwitch from '../src/lib/toggle-switch/index.js';
 import Tooltip from '../src/lib/tooltip/index.js';
 
@@ -110,12 +115,17 @@ const components = [
   RadioGroup,
   Select,
   SelectOption,
+  Slider,
+  SliderPointer,
   Spinner,
   Tab,
   TabContent,
   TabList,
   TabPane,
   Tabs,
+  TimePicker,
+  TimePickerDropdown,
+  TimeSelector,
   ToggleSwitch,
   Tooltip
 ];
@@ -182,12 +192,17 @@ export default {
   RadioGroup,
   Select,
   SelectOption,
+  Slider,
+  SliderPointer,
   Spinner,
   Tab,
   TabContent,
   TabList,
   TabPane,
   Tabs,
+  TimePicker,
+  TimePickerDropdown,
+  TimeSelector,
   ToggleSwitch,
   Tooltip
 };

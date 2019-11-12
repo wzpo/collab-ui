@@ -49,12 +49,17 @@
   "radio-group": "./src/lib/radio-group/index.js",
   "select": "./src/lib/select/index.js",
   "select-option": "./src/lib/select-option/index.js",
+  "slider": "./src/lib/slider/index.js",
+  "slider-pointer": "./src/lib/slider-pointer/index.js",
   "spinner": "./src/lib/spinner/index.js",
   "tab": "./src/lib/tab/index.js",
   "tab-content": "./src/lib/tab-content/index.js",
   "tab-list": "./src/lib/tab-list/index.js",
   "tab-pane": "./src/lib/tab-pane/index.js",
   "tabs": "./src/lib/tabs/index.js",
+  "time-picker": "./src/lib/time-picker/index.js",
+  "time-picker-dropdown": "./src/lib/time-picker-dropdown/index.js",
+  "time-selector": "./src/lib/time-selector/index.js",
   "toggle-switch": "./src/lib/toggle-switch/index.js",
   "tooltip": "./src/lib/tooltip/index.js"
 }
