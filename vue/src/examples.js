@@ -12,6 +12,7 @@ import Card from './lib/card/examples/index.js';
 import CardSection from './lib/card-section/examples/index.js';
 import Checkbox from './lib/checkbox/examples/index.js';
 import ComboBox from './lib/combo-box/examples/index.js';
+import DataTable from './lib/data-table/examples/index.js';
 import DatePicker from './lib/date-picker/examples/index.js';
 import Icon from './lib/icon/examples/index.js';
 import Input from './lib/input/examples/index.js';
@@ -47,6 +48,7 @@ const examples = [
   CardSection,
   Checkbox,
   ComboBox,
+  DataTable,
   DatePicker,
   Icon,
   Input,

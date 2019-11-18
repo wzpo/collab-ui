@@ -2,19 +2,16 @@
   <div class="row">
     <div class="example-spacing">
       <!-- Insert Example Here -->
-      <ExampleSliderDefault />
       <div class="gap" />
-      <ExampleSliderTwoHandles />
+      <ExampleDataTableDefault />
       <div class="gap" />
-      <ExampleSliderCross />
+      <ExampleDataTableScroll />
       <div class="gap" />
-      <ExampleSliderStep />
+      <ExampleDataTableSort />
       <div class="gap" />
-      <ExampleTimePickerDefault />
+      <ExampleDataTableCustomSort />
       <div class="gap" />
-      <ExampleTimePicker24Hour />
-      <div class="gap" />
-      <ExampleTimePicker30MinuteStep />
+      <ExampleDataTableResize />
     </div>
   </div>
 </template>
