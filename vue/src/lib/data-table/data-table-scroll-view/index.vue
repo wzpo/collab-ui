@@ -7,6 +7,7 @@
         :class="dataTable.tableClass"
         :style="dataTable.tableStyle"
       >
+        <slot name="colgroup"></slot>
         <thead class="md-data-table__thead">
           <slot name="header"></slot>
         </thead>
@@ -23,6 +24,7 @@
       }, dataTable.tableClass]"
       :style="dataTable.tableStyle"
     >
+      <slot name="colgroup"></slot>
       <tbody class="md-data-table__tbody">
         <slot name="body"></slot>
       </tbody>
@@ -31,16 +33,15 @@
     <table
       ref="loadingTable"
       v-if="dataTable.virtualScroll"
-      :class="{
-        'md-data-table__scrollable--body-table md-data-table__scrollable--loading-table': true,
-        'md-data-table__scrollable--virtual-table': dataTable.virtualScroll
-      }"
+      class="md-data-table__scrollable--body-table md-data-table__scrollable--loading-table"
+      :class="{ 'md-data-table__scrollable--virtual-table': dataTable.virtualScroll }"
     >
       <tbody class="md-data-table__tbody">
-        <md-spinner
+        <div
           class="md-data-table__spinner"
           :style="{ height: scrollHeight }">
-        </md-spinner>
+          <md-spinner />
+        </div>
       </tbody>
     </table>
 
@@ -61,11 +62,9 @@ export default {
 
   data() {
     return {
-      columns: this.dataTable.columns,
-      data: this.dataTable.data,
-      dataCount: this.dataTable.dataCount,
       siblingBody: null,
       preventBodyScrollPropagation: false,
+      page: 0,
     }
   },
 
@@ -76,6 +75,16 @@ export default {
   },
 
   props: {
+    /** @prop column's header and field data */
+    columns: {
+      type: Array,
+      required: true
+    },
+    /** @prop data for the table | [] */
+    data: {
+      type: Array,
+      default: _ => []
+    },
     /** @prop height of scroll area */
     scrollHeight: {
       type: String,
@@ -87,13 +96,9 @@ export default {
     data(val) {
       this.$nextTick(function() {
         this.alignScrollBar();
-        if (this.$refs.loadingTable && this.$refs.loadingTable) {
+        if (this.$refs.loadingTable) {
           this.$refs.loadingTable.style.display = 'none';
         }
-      });
-    },
-    dataCount(val) {
-      this.$nextTick(function() {
         if (this.dataTable.virtualScroll) {
           this.setVirtualScrollerHeight();
         }
@@ -165,39 +170,27 @@ export default {
       }
 
       if (this.dataTable.virtualScroll) {
-        const viewport = Handler.getOuterHeight(this.$refs.scrollBody);
-        const tableHeight = Handler.getOuterHeight(this.$refs.scrollTable);
-        const pageHeight = this.dataTable.virtualRowHeight * this.dataTable.visibleRows;
+        const pageHeight = this.dataTable.virtualRowHeight * this.dataTable.numberOfRowsToLoad;
         const virtualTableHeight = Handler.getOuterHeight(this.$refs.virtualScroller);
         const pageCount = (virtualTableHeight / pageHeight) || 1;
-        const scrollBodyTop = this.$refs.scrollTable.style.top || '0';
 
-        if (this.$refs.scrollBody.scrollTop + viewport > parseFloat(scrollBodyTop) + tableHeight ||
-           this.$refs.scrollBody.scrollTop < parseFloat(scrollBodyTop)) {
+        // if at end of scroll
+        if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) {
+          this.setVirtualScrollerHeight();
+          this.$refs.loadingTable.style.display = 'table';
 
-            if (this.$refs.loadingTable) {
-              this.$refs.loadingTable.style.display = 'table';
-              this.$refs.loadingTable.style.top = this.$refs.scrollBody.scrollTop + 'px';
-            }
+          const page = Math.floor(
+            (this.$refs.scrollBody.scrollTop * pageCount) / (this.$refs.scrollBody.scrollHeight)
+            ) + 1;
 
-            const page = Math.floor(
-              (this.$refs.scrollBody.scrollTop * pageCount) / (this.$refs.scrollBody.scrollHeight)
-              ) + 1;
-
-            this.dataTable.handleVirtualScroll({
-              page: page,
-              callback: () => {
-                if (this.$refs.loadingTable) {
-                  this.$refs.loadingTable.style.display = 'none';
-                }
-
-                this.$refs.scrollTable.style.top = ((page - 1) * pageHeight) + 'px';
-
-                if (this.siblingBody) {
-                  this.siblingBody.children[0].style.top = this.$refs.scrollTable.style.top;
-                }
+          this.dataTable.handleVirtualScroll({
+            page: page,
+            callback: () => {
+              if (this.siblingBody) {
+                this.siblingBody.children[0].style.top = this.$refs.scrollTable.style.top;
               }
-            });
+            }
+          });
         }
       }
     },

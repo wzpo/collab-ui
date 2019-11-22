@@ -21,6 +21,8 @@ import CloseIcon from '../src/lib/close-icon/index.js';
 import ComboBox from '../src/lib/combo-box/index.js';
 import CompositeAvatar from '../src/lib/composite-avatar/index.js';
 import DataTable from '../src/lib/data-table/index.js';
+import DataTableCheckbox from '../src/lib/data-table/data-table-checkbox/index.js';
+import DataTableHeaderCheckbox from '../src/lib/data-table/data-table-header-checkbox/index.js';
 import DataTableScrollView from '../src/lib/data-table/data-table-scroll-view/index.js';
 import DataTableSortIcon from '../src/lib/data-table/data-table-sort-icon/index.js';
 import DatePicker from '../src/lib/date-picker/index.js';
@@ -89,6 +91,8 @@ const components = [
   ComboBox,
   CompositeAvatar,
   DataTable,
+  DataTableCheckbox,
+  DataTableHeaderCheckbox,
   DataTableScrollView,
   DataTableSortIcon,
   DatePicker,
@@ -169,6 +173,8 @@ export default {
   ComboBox,
   CompositeAvatar,
   DataTable,
+  DataTableCheckbox,
+  DataTableHeaderCheckbox,
   DataTableScrollView,
   DataTableSortIcon,
   DatePicker,

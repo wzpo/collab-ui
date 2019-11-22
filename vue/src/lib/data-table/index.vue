@@ -36,9 +36,10 @@
             name="body"
             :row="row"
             :columns="columns"
+            :dataTable="dataTable"
             :index="index"
           >
-            <tr :key="index">
+            <tr :key="index" v-mdSelectRow="{disabled: !rowSelection, dataTable: dataTable, rowData: row}">
               <td v-for="(column, columnIndex) in columns" :key="columnIndex">
                 {{ row[column.field] }}
               </td>
@@ -50,8 +51,17 @@
     <!-- Scroll Condition -->
     <md-data-table-scroll-view
       v-if="scrollable"
+      :columns="columns"
+      :data="data"
       class="md-data-table__scrollable--wrappper"
       :scrollHeight="scrollHeight">
+      <template v-slot:colgroup v-if="resizableColumns">
+        <slot name="colgroup" :columns="columns" :dataTable="dataTable">
+          <colgroup>
+            <col v-for="(column, index) in columns" :key="index" />
+          </colgroup>
+        </slot>
+      </template>
       <template v-slot:header>
         <slot name="header" :columns="columns" :dataTable="dataTable">
           <tr>
@@ -71,9 +81,10 @@
           name="body"
           :row="row"
           :columns="columns"
+          :dataTable="dataTable"
           :index="index"
         >
-          <tr :key="index">
+          <tr :key="index" v-mdSelectRow="{disabled: !rowSelection, dataTable: dataTable, rowData: row}">
             <td v-for="(column, columnIndex) in columns" :key="columnIndex">
               {{ row[column.field] }}
             </td>
@@ -94,6 +105,7 @@
 <script>
 import Handler from './handler';
 import resizeColumnDirective from './resize-column.directive';
+import selectRowDirective from './select-row.directive';
 import sortColumnDirective from './sort-column.directive';
 
 export default {
@@ -102,9 +114,12 @@ export default {
   data() {
     return {
       dataTable: this,
+      dataCount: this.data.length,
+      dSelection: this.selection,
       dSortField: this.sortField,
       dSortOrder: this.sortOrder,
       preventPropagation: false,
+      selectionKeys: {},
       virtualScrollCb: null,
     }
   },
@@ -117,6 +132,7 @@ export default {
 
   directives: {
     mdResizeColumn: resizeColumnDirective,
+    mdSelectRow: selectRowDirective,
     mdSortColumn: sortColumnDirective,
   },
 
@@ -130,11 +146,6 @@ export default {
     data: {
       type: Array,
       default: _ => []
-    },
-    /** @prop number of records in data set | 0 */
-    dataCount: {
-      type: Number,
-      default: 0
     },
     /** @prop allow sort */
     sortable: Boolean,
@@ -150,8 +161,8 @@ export default {
       type: Number,
       default: 0
     },
-    /** @prop selected items | 0 */
-    selection: Array,
+    /** @prop selected items */
+    selection: [Array, Object],
     /** @prop css class on the wrapper container div | '' */
     containerClass: {
       type: String,
@@ -180,8 +191,8 @@ export default {
       type: String,
       default: ''
     },
-    /** @prop number of visible rows to show when virtual scrolling after load */
-    visibleRows: Number,
+    /** @prop number of rows to load by when virtual scrolling */
+    numberOfRowsToLoad: Number,
     /** @prop lazy load mode for small sections of data to load instead of entire data | false */
     lazy: Boolean,
     /** @prop virtual scroll on the data table | false */
@@ -194,7 +205,7 @@ export default {
     /** @prop virtual row height | 28 */
     virtualRowHeight: {
       type: Number,
-      default: 28
+      default: 34
     },
     /** @prop widths of the table and its cells to fit for the content | false */
     autoLayout: Boolean,
@@ -215,6 +226,9 @@ export default {
 
   watch: {
     data(val) {
+      if (!this.lazy) {
+        this.dataCount = val ? val.length : 0;
+      }
       this.$nextTick(function() {
         if (this.virtualScroll && this.virtualScrollCb) {
           this.virtualScrollCb();
@@ -228,7 +242,7 @@ export default {
       });
     },
     selection(val) {
-      this.selection2 = val;
+      this.dSelection = val;
       this.$nextTick(function() {
         if (!this.preventPropagation) {
           this.updateSelectionKeys();
@@ -247,9 +261,9 @@ export default {
   computed: {
     lazyData() {
       return {
-        first: this.first,
-        visibleRows: this.visibleRows,
-        selection: this.selection2,
+        rowNumFirstLoad: this.first,
+        numberOfRowsToLoad: this.numberOfRowsToLoad,
+        selection: this.dSelection,
         sortField: this.dSortField,
         sortOrder: this.dSortOrder,
       };
@@ -425,7 +439,7 @@ export default {
 
     // Virtual Scroll
     handleVirtualScroll(event) {
-      this.first = (event.page - 1) * this.visibleRows;
+      this.rowNumFirstLoad = (event.page - 1) * this.numberOfRowsToLoad;
       this.virtualScrollCb = event.callback;
 
       if (this.virtualScrollTimer) {
@@ -439,32 +453,32 @@ export default {
 
     // Select
     updateSelectionKeys() {
-      if (this.dataKey && this.selection2) {
+      if (this.dataKey && this.dSelection) {
         this.selectionKeys = {};
-        if (typeof(this.selection2) === 'array') {
-          for (const data of this.selection2) {
+        if (typeof(this.dSelection) === 'array') {
+          for (const data of this.dSelection) {
             this.selectionKeys[data[this.dataKey]] = 1;
           }
         } else {
-          this.selectionKeys[this.selection2[this.dataKey]] = 1;
+          this.selectionKeys[this.dSelection[this.dataKey]] = 1;
         }
       }
     },
 
     isSelected(rowData) {
-      if (rowData && this.selection2) {
+      if (rowData && this.dSelection) {
         if (this.dataKey) {
-          for (let i = 0; i < this.selection2.length; i++) {
-            if (this.selection2[i][this.dataKey] === rowData[this.dataKey]) {
+          for (let i = 0; i < this.dSelection.length; i++) {
+            if (this.dSelection[i][this.dataKey] === rowData[this.dataKey]) {
               this.selectionKeys[rowData[this.dataKey]] = 1;
             }
           }
           return this.selectionKeys[rowData[this.dataKey]] !== undefined; // found in selection
         } else {
-          if (typeof(this.selection2) === 'array') {
-            return findIndex(this.selection2, rowData) > -1;
+          if (typeof(this.dSelection) === 'array') {
+            return findIndex(this.dSelection, rowData) > -1;
           } else {
-            return this.selection2 === rowData;
+            return this.dSelection === rowData;
           }
         }
       }
@@ -472,16 +486,16 @@ export default {
     },
 
     toggleRowsWithCheckbox(event, check) {
-      this.selection2 = check ? this.data.slice() : [];
+      this.dSelection = check ? this.data.slice() : [];
       this.preventPropagation = true;
       this.updateSelectionKeys();
-      this.$emit('selectionChange', this.selection2);
+      this.$emit('selectionChange', this.dSelection);
       this.$emit('headerCheckboxToggle', {originalEvent: event, checked: check});
     },
 
     toggleRowWithCheckbox(event, rowData) {
 
-      this.selection2 = this.selection2 || [];
+      this.dSelection = this.dSelection || [];
       const isChecked = this.isSelected(rowData);
 
       const rowDataKeyValue = this.dataKey ? rowData[this.dataKey] : null;
@@ -489,9 +503,9 @@ export default {
       this.preventPropagation = true;
 
       if (isChecked) { // then uncheck from selection
-        const checkedIndex = findIndex(this.selection2, rowData);
-        this.selection2 = this.selection2.filter((val, i) => i !== checkedIndex);
-        this.$emit('selectionChange', this.selection2);
+        const checkedIndex = findIndex(this.dSelection, rowData);
+        this.dSelection = this.dSelection.filter((val, i) => i !== checkedIndex);
+        this.$emit('selectionChange', this.dSelection);
         this.$emit('rowUncheck', {
           originalEvent: event.originalEvent,
           data: rowData,
@@ -502,8 +516,8 @@ export default {
         }
 
       } else { // add to selection
-        this.selection2 = this.selection2 ? [...this.selection2, rowData] : [rowData];
-        this.$emit('selectionChange', this.selection2);
+        this.dSelection = this.dSelection ? [...this.dSelection, rowData] : [rowData];
+        this.$emit('selectionChange', this.dSelection);
         this.$emit('rowCheck', {
           originalEvent: event.originalEvent,
           data: rowData,
@@ -526,17 +540,17 @@ export default {
         const dataKeyValue = this.dataKey ? rowData[this.dataKey] : null;
 
         if (selected) { // then unselect to null
-          this.selection2 = null;
+          this.dSelection = null;
           this.selectionKeys = {};
-          this.$emit('selectionChange', this.selection2);
+          this.$emit('selectionChange', this.dSelection);
           this.$emit('rowUnselect', {
             originalEvent: event.originalEvent,
             data: rowData,
             type: 'row'
           });
         } else { // select
-          this.selection2 = rowData;
-          this.$emit('selectionChange', this.selection2);
+          this.dSelection = rowData;
+          this.$emit('selectionChange', this.dSelection);
           this.$emit('rowSelect', {
             originalEvent: event.originalEvent,
             data: rowData,

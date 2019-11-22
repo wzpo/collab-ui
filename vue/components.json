@@ -20,6 +20,8 @@
   "combo-box": "./src/lib/combo-box/index.js",
   "composite-avatar": "./src/lib/composite-avatar/index.js",
   "data-table": "./src/lib/data-table/index.js",
+  "data-table-checkbox": "./src/lib/data-table/data-table-checkbox/index.js",
+  "data-table-header-checkbox": "./src/lib/data-table/data-table-header-checkbox/index.js",
   "data-table-scroll-view": "./src/lib/data-table/data-table-scroll-view/index.js",
   "data-table-sort-icon": "./src/lib/data-table/data-table-sort-icon/index.js",
   "date-picker": "./src/lib/date-picker/index.js",

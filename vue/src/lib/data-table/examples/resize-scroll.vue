@@ -2,15 +2,15 @@
   <md-data-table
     :columns="columns"
     :data="people"
+    :resizableColumns="true"
     :scrollable="true"
     scrollHeight="200px"
-    :containerStyle="{'width': '60%'}"
   ></md-data-table>
 </template>
 
 <script>
 export default {
-  name: 'ExampleDataTableScroll',
+  name: 'ExampleDataTableResizeScroll',
 
   data() {
     return {

@@ -3,7 +3,7 @@
     :columns="columns"
     :data="people"
     :customSort="true"
-    @sortBy="mySort($event)"
+    @sortBy="mySort"
   >
     <template v-slot:header="slotProps">
       <tr>

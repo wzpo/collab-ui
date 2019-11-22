@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.2](https://github.com/momentum-design/momentum-ui/compare/@momentum-ui/angular@10.0.1...@momentum-ui/angular@10.0.2) (2019-11-20)
+
+
+### Bug Fixes
+
+* 🐛 alert-banner hide not required for non-closable banners ([5b7fb83](https://github.com/momentum-design/momentum-ui/commit/5b7fb83))
+* **angular:** checkbox should set checked value even if disabled ([e6a65bb](https://github.com/momentum-design/momentum-ui/commit/e6a65bb))
+* **data-table:** change virtual scroll example ([84ff7b7](https://github.com/momentum-design/momentum-ui/commit/84ff7b7))
+
+
+
+
+
+## [10.0.1](https://github.com/momentum-design/momentum-ui/compare/@momentum-ui/angular@10.0.0...@momentum-ui/angular@10.0.1) (2019-11-19)
+
+**Note:** Version bump only for package @momentum-ui/angular
+
+
+
+
+
+# [10.0.0](https://github.com/momentum-design/momentum-ui/compare/@momentum-ui/angular@9.5.2...@momentum-ui/angular@10.0.0) (2019-11-16)
+
+
+### Features
+
+* **tabs:** add underline tab variation ([5bba6b0](https://github.com/momentum-design/momentum-ui/commit/5bba6b0))
+
+
+### BREAKING CHANGES
+
+* **tabs:** Default of tabs is now underline, pass in tabType=‘pills’ for pill variation
+
+
+
+
+
+## [9.5.2](https://github.com/momentum-design/momentum-ui/compare/@momentum-ui/angular@9.5.1...@momentum-ui/angular@9.5.2) (2019-11-14)
+
+**Note:** Version bump only for package @momentum-ui/angular
+
+
+
+
+
+## [9.5.1](https://github.com/momentum-design/momentum-ui/compare/@momentum-ui/angular@9.5.0...@momentum-ui/angular@9.5.1) (2019-11-13)
+
+**Note:** Version bump only for package @momentum-ui/angular
+
+
+
+
+
 # [9.5.0](https://github.com/momentum-design/momentum-ui/compare/@momentum-ui/angular@9.4.6...@momentum-ui/angular@9.5.0) (2019-11-09)
 
 

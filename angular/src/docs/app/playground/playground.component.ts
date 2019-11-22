@@ -8,18 +8,17 @@ import { Component } from '@angular/core';
         <h1>Angular Playground</h1>
         <div class="docs-container">
           <!-- Insert Example Here -->
-          <example-data-table-resize></example-data-table-resize>
+          <example-data-table-multi-select-checkbox></example-data-table-multi-select-checkbox>
+          
 <!--
           <example-data-table-multi-dropdown-select></example-data-table-multi-dropdown-select>
-          <example-data-table-multi-select-checkbox></example-data-table-multi-select-checkbox>
           <example-data-table-multi-select-resize-scroll></example-data-table-multi-select-resize-scroll>
           
-          <example-data-table-resize-scroll></example-data-table-resize-scroll>
-          <example-data-table-scroll></example-data-table-scroll>
-          <example-data-table-select></example-data-table-select>
-          <example-data-table-selection></example-data-table-selection>
-          <example-data-table-virtual-scroll></example-data-table-virtual-scroll>
-          <example-data-table-zebra></example-data-table-zebra>
+          
+
+          
+          
+          
 -->
         </div>
       </article>
