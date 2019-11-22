@@ -51,8 +51,6 @@
     <!-- Scroll Condition -->
     <md-data-table-scroll-view
       v-if="scrollable"
-      :columns="columns"
-      :data="data"
       class="md-data-table__scrollable--wrappper"
       :scrollHeight="scrollHeight">
       <template v-slot:colgroup v-if="resizableColumns">
@@ -104,9 +102,11 @@
 
 <script>
 import Handler from './handler';
+import findIndex from 'lodash/findIndex';
 import resizeColumnDirective from './resize-column.directive';
 import selectRowDirective from './select-row.directive';
 import sortColumnDirective from './sort-column.directive';
+import { eventBus } from '../utils/eventBus'
 
 export default {
   name: 'md-data-table',
@@ -127,6 +127,7 @@ export default {
   provide() {
     return {
       dataTable: this.dataTable,
+      eventBus: eventBus,
     }
   },
 
@@ -234,6 +235,8 @@ export default {
           this.virtualScrollCb();
         }
       });
+
+      eventBus.$emit('dataChange', this.data);
     },
     sortField(val) {
       this.dSortField = val;
@@ -243,6 +246,14 @@ export default {
     },
     selection(val) {
       this.dSelection = val;
+      this.$nextTick(function() {
+        if (!this.preventPropagation) {
+          this.updateSelectionKeys();
+        }
+        this.preventPropagation = false;
+      });
+    },
+    dSelection(val) {
       this.$nextTick(function() {
         if (!this.preventPropagation) {
           this.updateSelectionKeys();
@@ -455,13 +466,15 @@ export default {
     updateSelectionKeys() {
       if (this.dataKey && this.dSelection) {
         this.selectionKeys = {};
-        if (typeof(this.dSelection) === 'array') {
+        if (this.dSelection instanceof Array) {
           for (const data of this.dSelection) {
             this.selectionKeys[data[this.dataKey]] = 1;
           }
         } else {
           this.selectionKeys[this.dSelection[this.dataKey]] = 1;
         }
+
+        eventBus.$emit('selectionChange', this.dSelection);
       }
     },
 
@@ -475,7 +488,7 @@ export default {
           }
           return this.selectionKeys[rowData[this.dataKey]] !== undefined; // found in selection
         } else {
-          if (typeof(this.dSelection) === 'array') {
+          if (this.dSelection instanceof Array) {
             return findIndex(this.dSelection, rowData) > -1;
           } else {
             return this.dSelection === rowData;
@@ -494,7 +507,6 @@ export default {
     },
 
     toggleRowWithCheckbox(event, rowData) {
-
       this.dSelection = this.dSelection || [];
       const isChecked = this.isSelected(rowData);
 
@@ -527,6 +539,8 @@ export default {
           this.selectionKeys[rowDataKeyValue] = 1;
         }
       }
+
+      eventBus.$emit('selectionChange', this.dSelection);
     },
 
     // row click selection

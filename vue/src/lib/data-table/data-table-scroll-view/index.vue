@@ -68,23 +68,9 @@ export default {
     }
   },
 
-  inject: {
-    dataTable: {
-      default: {}
-    },
-  },
+  inject: ['eventBus', 'dataTable'],
 
   props: {
-    /** @prop column's header and field data */
-    columns: {
-      type: Array,
-      required: true
-    },
-    /** @prop data for the table | [] */
-    data: {
-      type: Array,
-      default: _ => []
-    },
     /** @prop height of scroll area */
     scrollHeight: {
       type: String,
@@ -93,27 +79,13 @@ export default {
   },
 
   watch: {
-    data(val) {
-      this.$nextTick(function() {
-        this.alignScrollBar();
-        if (this.$refs.loadingTable) {
-          this.$refs.loadingTable.style.display = 'none';
-        }
-        if (this.dataTable.virtualScroll) {
-          this.setVirtualScrollerHeight();
-        }
-      });
-    },
     scrollHeight(val) {
       this.setScrollHeight();
     },
   },
 
-  updated() {
-    if (this.$el.offsetParent) {
-      this.alignScrollBar();
-      this.setScrollHeight();
-    }
+  created() {
+    this.eventBus.$on('dataChange', this.handleDataChange);
   },
 
   mounted() {
@@ -133,7 +105,15 @@ export default {
     }
   },
 
+  updated() {
+    if (this.$el.offsetParent) {
+      this.alignScrollBar();
+      this.setScrollHeight();
+    }
+  },
+
   beforeDestroy() {
+    this.eventBus.$off('dataChange');
     this.unbindEvents();
   },
 
@@ -232,6 +212,18 @@ export default {
       const scrollBarWidth = this.hasVerticalOverflow() ? Handler.calculateScrollbarWidth() : 0;
       this.$refs.scrollHeaderBox.style.marginRight = scrollBarWidth + 'px';
     },
+
+    handleDataChange() {
+      this.$nextTick(function() {
+        this.alignScrollBar();
+        if (this.$refs.loadingTable) {
+          this.$refs.loadingTable.style.display = 'none';
+        }
+        if (this.dataTable.virtualScroll) {
+          this.setVirtualScrollerHeight();
+        }
+      });
+    }
   },
 };
 </script>

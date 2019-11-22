@@ -4,8 +4,9 @@
       :checked="checked"
       :disabled="disabled"
       label=""
-      :htmlId="id + '-checkbox'"
-      @click="handleClick">
+      :htmlId="htmlId"
+      @change="handleChange"
+      >
     </md-checkbox>
   </div>
 </template>
@@ -19,42 +20,41 @@ export default {
   data() {
     return {
       checked: false,
+      htmlId: this.id || uniqueId('md-data-table-checkbox-'),
     }
   },
 
-  inject: {
-    dataTable: {
-      default: {}
-    },
-  },
+  inject: ['eventBus', 'dataTable'],
 
   props: {
     data: Object,
     disabled: Boolean,
-    id: {
-      type: String,
-      default: uniqueId('md-data-table-checkbox-')
-    },
-    disabled: Boolean,
+    id: String,
   },
 
-  watch: {
-    data(val) {
-      this.checked = this.dataTable.isSelected(this.data);
-    },
+  created() {
+    this.eventBus.$on('selectionChange', this.updateCheckedState);
+  },
+
+  beforeDestroy() {
+    this.eventBus.$off('selectionChange');
   },
 
   mounted() {
-    this.checked = this.dataTable.isSelected(this.data);
+    this.updateCheckedState();
   },
 
   methods: {
-    handleClick(event) {
+    handleChange(event) {
       if (!this.disabled) {
         this.dataTable.toggleRowWithCheckbox({
             originalEvent: event,
         }, this.data);
       }
+    },
+
+    updateCheckedState() {
+      this.checked = this.dataTable.isSelected(this.data);
     },
 
   },

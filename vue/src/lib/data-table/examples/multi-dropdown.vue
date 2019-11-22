@@ -3,23 +3,28 @@
     <md-data-table
       :columns="columns"
       :data="people"
-      :rowSelection="true"
-      :selection="selectedPerson"
+      :selection="selectedPeople"
+      dataKey="name"
       :columnDividers="true"
-      @rowSelect="onRowSelect"
-      @rowUnselect="onRowUnselect"
+      @selectionChange="handleSelectionChange"
     >
       <template v-slot:header="slotProps">
         <tr>
-          <th style="width: 4rem"></th>
-          <th v-for="(column, index) in slotProps.columns" :key="index">
+          <th style="width: 1rem">
+            <md-data-table-header-checkbox></md-data-table-header-checkbox>
+          </th>
+          <th style="width: 1rem"></th>
+          <th v-for="(column, index) in slotProps.columns" :key="index" style="width: 6rem" >
             {{ column.header }}
           </th>
         </tr>
       </template>
 
       <template v-slot:body="slotProps">
-        <tr :key="slotProps.index" v-mdSelectRow="{dataTable: slotProps.dataTable, rowData: slotProps.row}">
+        <tr :key="slotProps.index">
+          <td>
+            <md-data-table-checkbox :data="slotProps.row"></md-data-table-checkbox>
+          </td>
           <td>
             <md-avatar :title="slotProps.row['avatar']"></md-avatar>
           </td>
@@ -47,18 +52,19 @@
       </template>
 
     </md-data-table>
-    <div v-if="selectedPerson">
-      Selected Row:
-      {{selectedPerson.name}} - {{selectedPerson.email}} - {{selectedPerson.updated}} - {{selectedPerson.status}}
+    <div class="medium-4 columns">
+      <ul>
+        <li v-for="(person, index) in selectedPeople" :key="index" style="text-align: left">
+          {{person.name}} - {{person.email}} -  {{person.updated}} - {{person.status}}
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
-import DataTable from '../index';
-
 export default {
-  name: 'ExampleDataTableSelect',
+  name: 'ExampleDataTableMultiDropdown',
 
   data() {
     return {
@@ -80,26 +86,19 @@ export default {
         {'avatar': 'Thomas Campbell', 'name': 'Thomas Campbell', 'email': 'tcampbell@cisco.com', 'updated': '07-July-2019', 'status': 'Active'},
         {'avatar': 'Derek Nelson', 'name': 'Derek Nelson', 'email': 'dnelson@cisco.com', 'updated': '07-June-2019', 'status': 'Trial'}
       ],
-      selectedPerson: null,
+      selectedPeople: [],
     }
-  },
-
-  directives: {
-    mdSelectRow: DataTable.directives.mdSelectRow
   },
 
   methods: {
     onChange(e) {
         console.info('select change: ', e);
     },
-    onRowSelect(e) {
-        console.info('row select emitter : ', e);
-        this.selectedPerson = e.data;
-    },
-    onRowUnselect(e) {
-        console.info('unselected: ', e);
-        this.selectedPerson = null;
-    },
+
+    handleSelectionChange(selection) {
+      this.selectedPeople = selection;
+    }
   },
+
 };
 </script>

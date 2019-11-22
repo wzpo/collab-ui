@@ -3,10 +3,20 @@
     <md-data-table
       :columns="columns"
       :data="people"
+      :resizableColumns="true"
+      :scrollable="true"
+      scrollHeight="200px"
       :selection="selectedPeople"
       dataKey="name"
       @selectionChange="handleSelectionChange"
     >
+      <template v-slot:colgroup="slotProps">
+        <colgroup>
+          <col style="width: 4rem">
+          <col v-for="(column, index) in slotProps.columns" :key="index" />
+        </colgroup>
+      </template>
+
       <template v-slot:header="slotProps">
         <tr>
           <th style="width: 4rem">
@@ -28,7 +38,6 @@
           </td>
         </tr>
       </template>
-
     </md-data-table>
     <div class="medium-4 columns">
       <ul>
@@ -42,7 +51,7 @@
 
 <script>
 export default {
-  name: 'ExampleDataTableMultiSelectCheckbox',
+  name: 'ExampleDataTableMultiSelectResizeScroll',
 
   data() {
     return {
@@ -62,7 +71,14 @@ export default {
         {'name': 'Robert', 'state': 'New Mexico', 'age': 34, 'color': 'Yellow'},
         {'name': 'Greg', 'state': 'Arizona', 'age': 29, 'color': 'Orange'},
         {'name': 'Thomas', 'state': 'Texas', 'age': 32, 'color': 'Black'},
-        {'name': 'Derek', 'state': 'Montana', 'age': 27, 'color': 'Red'}
+        {'name': 'Derek', 'state': 'Montana', 'age': 27, 'color': 'Red'},
+        {'name': 'Robert', 'state': 'New Mexico', 'age': 34, 'color': 'Yellow'},
+        {'name': 'Sarah', 'state': 'Arizona', 'age': 29, 'color': 'Orange'},
+        {'name': 'Michelle', 'state': 'Montana', 'age': 24, 'color': 'Red'},
+        {'name': 'Jennifer', 'state': 'New Mexico', 'age': 34, 'color': 'Purple'},
+        {'name': 'Alex', 'state': 'Arizona', 'age': 29, 'color': 'Orange'},
+        {'name': 'Lizzy', 'state': 'Texas', 'age': 22, 'color': 'Black'},
+        {'name': 'Olivia', 'state': 'Montana', 'age': 27, 'color': 'Red'},
       ],
       selectedPeople: [
         {'name': 'Mike', 'state': 'New York', 'age': 45, 'color': 'Orange'},
@@ -77,6 +93,5 @@ export default {
       this.selectedPeople = selection;
     }
   },
-
 };
 </script>

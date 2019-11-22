@@ -4,8 +4,8 @@
       :checked="checked"
       :disabled="disabled"
       label=""
-      :htmlId="id + '-checkbox'"
-      @click="handleClick">
+      :htmlId="htmlId"
+      @change="handleChange">
     </md-checkbox>
   </div>
 </template>
@@ -19,42 +19,31 @@ export default {
   data() {
     return {
       checked: false,
+      htmlId: this.id || uniqueId('md-data-table-checkbox-'),
     }
   },
 
-  inject: {
-    dataTable: {
-      default: {}
-    },
-  },
+  inject: ['eventBus', 'dataTable'],
 
   props: {
-    /** @prop data for the table | [] */
-    data: Array,
-    selection: [Array, Object],
     disabled: Boolean,
-    id: {
-      type: String,
-      default: uniqueId('md-data-table-header-checkbox-')
-    },
-    disabled: Boolean,
+    id: String,
   },
 
-  watch: {
-    data(val) {
-      this.checked = this.updateCheckedState();
-    },
-    selection(val) {
-      this.checked = this.updateCheckedState();
-    },
+  created() {
+    this.eventBus.$on('selectionChange', this.updateCheckedState);
+  },
+
+  beforeDestroy() {
+    this.eventBus.$off('selectionChange');
   },
 
   mounted() {
-    this.checked = this.updateCheckedState();
+    this.updateCheckedState();
   },
 
   methods: {
-    handleClick(event) {
+    handleChange(event) {
       if (!this.disabled) {
         if (this.dataTable.data && this.dataTable.data.length > 0) {
           this.dataTable.toggleRowsWithCheckbox(event, !this.checked);
@@ -63,11 +52,10 @@ export default {
     },
 
     updateCheckedState() {
-      return (
+      this.checked = 
         this.dataTable.data && this.dataTable.data.length > 0
-        && this.dataTable.selection && this.dataTable.selection.length > 0
-        && this.dataTable.selection.length === this.dataTable.data.length
-      );
+        && this.dataTable.dSelection && this.dataTable.dSelection.length > 0
+        && this.dataTable.dSelection.length === this.dataTable.data.length;
     },
 
   },
