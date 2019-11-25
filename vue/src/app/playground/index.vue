@@ -25,19 +25,25 @@
       <ExampleDataTableSelection />
       <div class="gap" />
       <ExampleDataTableVirtualScroll />
-      
-
-
-      
-      -->
-      
-      
       <div class="gap" />
       <ExampleDataTableMultiSelectCheckbox />
       <div class="gap" />
       <ExampleDataTableMultiDropdown />
       <div class="gap" />
       <ExampleDataTableMultiSelectResizeScroll />
+      
+      -->
+      
+      
+      <div class="gap" />
+      <ExampleTopbarLight />
+      <div class="gap" />
+      <ExampleTopbarDark />
+      <div class="gap" />
+      <ExampleTopbarBlue />
+      <div class="gap" />
+      <ExampleTopbarNoMiddle />
+
     </div>
   </div>
 </template>

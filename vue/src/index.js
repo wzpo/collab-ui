@@ -68,6 +68,10 @@ import TimePickerDropdown from '../src/lib/time-picker-dropdown/index.js';
 import TimeSelector from '../src/lib/time-selector/index.js';
 import ToggleSwitch from '../src/lib/toggle-switch/index.js';
 import Tooltip from '../src/lib/tooltip/index.js';
+import Topbar from '../src/lib/topbar/index.js';
+import TopbarMobile from '../src/lib/topbar/topbar-mobile/index.js';
+import TopbarNav from '../src/lib/topbar/topbar-nav/index.js';
+import TopbarRight from '../src/lib/topbar/topbar-right/index.js';
 
 const components = [
   Accordion,
@@ -137,7 +141,11 @@ const components = [
   TimePickerDropdown,
   TimeSelector,
   ToggleSwitch,
-  Tooltip
+  Tooltip,
+  Topbar,
+  TopbarMobile,
+  TopbarNav,
+  TopbarRight
 ];
 
 const install = Vue => {
@@ -219,5 +227,9 @@ export default {
   TimePickerDropdown,
   TimeSelector,
   ToggleSwitch,
-  Tooltip
+  Tooltip,
+  Topbar,
+  TopbarMobile,
+  TopbarNav,
+  TopbarRight
 };

@@ -34,6 +34,7 @@ import Tabs from './lib/tabs/examples/index.js';
 import TimePicker from './lib/time-picker/examples/index.js';
 import ToggleSwitch from './lib/toggle-switch/examples/index.js';
 import Tooltip from './lib/tooltip/examples/index.js';
+import Topbar from './lib/topbar/examples/index.js';
 
 const examples = [
   Accordion,
@@ -69,7 +70,8 @@ const examples = [
   Tabs,
   TimePicker,
   ToggleSwitch,
-  Tooltip
+  Tooltip,
+  Topbar
 ];
 
 const install = Vue => {

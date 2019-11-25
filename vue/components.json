@@ -66,5 +66,9 @@
   "time-picker-dropdown": "./src/lib/time-picker-dropdown/index.js",
   "time-selector": "./src/lib/time-selector/index.js",
   "toggle-switch": "./src/lib/toggle-switch/index.js",
-  "tooltip": "./src/lib/tooltip/index.js"
+  "tooltip": "./src/lib/tooltip/index.js",
+  "topbar": "./src/lib/topbar/index.js",
+  "topbar-mobile": "./src/lib/topbar/topbar-mobile/index.js",
+  "topbar-nav": "./src/lib/topbar/topbar-nav/index.js",
+  "topbar-right": "./src/lib/topbar/topbar-right/index.js"
 }
