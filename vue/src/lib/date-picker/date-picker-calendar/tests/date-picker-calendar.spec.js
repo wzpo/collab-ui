@@ -3,14 +3,14 @@ import DatePickerCalendar from '../index.vue';
 import DatePickerDay from '../../date-picker-day/index.vue';
 import DatePickerWeek from '../../date-picker-week/index.vue';
 import DatePickerMonth from '../../date-picker-month/index.vue';
-import Button from '../../button/index.vue';
-import Icon from '../../icon/index.vue';
+import Button from '../../../button/index.vue';
+import Icon from '../../../icon/index.vue';
 import Vue from 'vue';
 import moment from 'moment-timezone';
 import {
   isSameDay,
   now
-} from '../../utils/dateUtils.js';
+} from '../../../utils/dateUtils.js';
 
 Vue.component(Button.name, Button);
 Vue.component(Icon.name, Icon);

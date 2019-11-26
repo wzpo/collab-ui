@@ -10,6 +10,12 @@ export default {
     }
   },
 
+  inject: {
+    getBrandNode: {
+      default: null
+    }
+  },
+
   render(h) {
     const {
       closeMenuAriaLabel,
@@ -29,12 +35,10 @@ export default {
       />
     );
 
-    const passClickHandlerToChildren = this.$slots.default.map(child => {
-      return cloneElement(child, h, {
-        listeners: {
-          click: this.handleClose
-        }
-      });
+    const passClickHandlerToChildren = this.$slots.default && this.$slots.default.map(child => {
+      child.data.on = { ...child.data.on, click: this.handleClose };
+      child.data.nativeOn = { ...child.data.nativeOn, click: this.handleClose };
+      return child;
     });
 
     return (
@@ -59,7 +63,7 @@ export default {
             ariaLabel={closeMenuAriaLabel}
           />
           {/* eslint-disable jsx-a11y/no-static-element-interactions */}
-          <span onClick={this.handleClose} onKeydown={this.handleKeyDown}>{this.$slots.brand}</span>
+          <span onClick={this.handleClose} onKeydown={this.handleKeyDown}>{this.$slots.brand || this.getBrandNode && this.getBrandNode()}</span>
           {/* eslint-enable jsx-a11y/no-static-element-interactions */}
           <md-list-separator />
           <nav class={`md-tb-mobile__nav`}>

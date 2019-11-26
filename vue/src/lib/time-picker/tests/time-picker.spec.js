@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import TimePicker from '../index.vue';
-import TimeSelector from '../../time-selector/index.vue';
-import TimePickerDropdown from '../../time-picker-dropdown/index.vue';
+import TimeSelector from '../time-selector/index.vue';
+import TimePickerDropdown from '../time-picker-dropdown/index.vue';
 import Input from '../../input/index.vue';
 import EventOverlay from '../../event-overlay/index.vue';
 import moment from 'moment-timezone';
@@ -83,7 +83,7 @@ describe('TimePicker', () => {
       .trigger('click');
     expect(container.vm.selectedTime2.format('HH')).toEqual('14');
     expect(container.vm.selectedTime2.format('mm')).toEqual('00');
-    expect(onChange).toHaveBeenLastCalledWith(14, 0, 0);
+    expect(onChange).toHaveBeenLastCalledWith(14, 0, -1);
   });
 
 
@@ -120,7 +120,7 @@ describe('TimePicker', () => {
 
     expect(container.vm.selectedTime2.format('HH')).toEqual('14');
     expect(container.vm.selectedTime2.format('mm')).toEqual('00');
-    expect(onChange).toHaveBeenLastCalledWith(14, 0, 0);
+    expect(onChange).toHaveBeenLastCalledWith(14, 0, -1);
   });
   
   it('allows scroll Up/Down for minutes and hours', () => {
@@ -155,7 +155,7 @@ describe('TimePicker', () => {
 
     expect(container.vm.selectedTime2.format('HH')).toEqual('14');
     expect(container.vm.selectedTime2.format('mm')).toEqual('00');
-    expect(onChange).toHaveBeenLastCalledWith(14, 0, 0);
+    expect(onChange).toHaveBeenLastCalledWith(14, 0, -1);
   });
 
   it('allows clicks Up/Down Arrows for meridian', () => {
@@ -176,7 +176,7 @@ describe('TimePicker', () => {
       .trigger('click');
     // Test Up Arrow
     expect(container.vm.selectedTime2.format('A')).toEqual('AM');
-    expect(onChange).toHaveBeenLastCalledWith(2, 0, 1);
+    expect(onChange).toHaveBeenLastCalledWith(2, 0, 0);
 
     // Test Down Arrow
     const arrowdown = container.find('.inline-flex').findAll('.icon-arrow-down_24');
@@ -208,7 +208,7 @@ describe('TimePicker', () => {
     meridianInput.trigger('keyup', { charCode: 38 });
 
     expect(container.vm.selectedTime2.format('A')).toEqual('AM');
-    expect(onChange).toHaveBeenLastCalledWith(2, 0, 1);
+    expect(onChange).toHaveBeenLastCalledWith(2, 0, 0);
 
     // Test Down Arrow KeyPress
     meridianInput.trigger('keyup', { charCode: 40 });

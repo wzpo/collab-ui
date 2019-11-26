@@ -141,12 +141,12 @@ export default {
 
     onFocus() {
       this.isOpen = true;
-      this.anchorNode = this.$refs.clickTextField.$parent.$vnode.elm;
+      this.anchorNode = this.$refs.clickTextField.$vnode.elm;
     },
 
     onMouseDown() {
       this.isOpen = !this.isOpen,
-      this.anchorNode = this.$refs.clickTextField.$parent.$vnode.elm;
+      this.anchorNode = this.$refs.clickTextField.$vnode.elm;
     },
 
     triggerOnChange(dayChange) {
@@ -230,7 +230,6 @@ export default {
 
         return this.changeTime(unit, -minuteInterval);
       } else {
-        console.log('onSelectKeyDown', hour);
         this.setTime(hour, minute, pre);
       }
     },

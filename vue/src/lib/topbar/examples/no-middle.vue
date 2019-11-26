@@ -22,7 +22,7 @@
       </template>
     </md-topbar-mobile>
     
-    <template v-slot:brandAnchor>
+    <template v-slot:brand>
       <a
         href="javascript:void(0)"
         title="Momentum UI"

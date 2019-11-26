@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils';
 import DatePickerWeek from '../index.vue';
 import DatePickerDay from '../../date-picker-day/index.vue';
-import Button from '../../button/index.vue';
+import Button from '../../../button/index.vue';
 import Vue from 'vue';
 import moment from 'moment-timezone';
 

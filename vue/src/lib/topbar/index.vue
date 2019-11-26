@@ -4,6 +4,12 @@ import cloneElement from '../utils/cloneElement';
 export default {
   name: 'md-topbar',
 
+  provide() {
+    return {
+      getBrandNode: () => this.$slots.brand,
+    }
+  },
+
   render(h) {
     const {
       anchor,
@@ -19,11 +25,7 @@ export default {
 
     const brandNodeChildren = ([
       <div class={`${brandClass}__logo`} key={`${brandClass}__logo`}>
-        {
-          this.$slots.image
-            ? <slot name='image' />
-            : <i class={`icon ${icon}`} />
-        }
+        {this.$slots.image || <i class={`icon ${icon}`} />}
       </div>,
       <div class={`${brandClass}__title`} key={`${brandClass}__title`}>
         {title}
@@ -31,20 +33,7 @@ export default {
     ]);
 
     const getBrandAnchor = () => (
-      this.$slots.brandAnchor
-        ? cloneElement(
-            this.$slots.brandAnchor[0],
-            h,
-            {
-              class:
-                `${brandClass}` +
-                `${(this.$slots.brandAnchor[0].data.staticClass && ` ${this.$slots.brandAnchor[0].data.staticClass}`) || ''}`,
-            },
-            brandNodeChildren
-          )
-        : <a class={brandClass} href={anchor}>
-            {brandNodeChildren}
-          </a>
+      this.$slots.brand || <a class={brandClass} href={anchor}>{brandNodeChildren}</a>
     );
 
     const brandNode = (
@@ -52,19 +41,6 @@ export default {
         {getBrandAnchor()}
       </div>
     );
-
-    const injectChildren = this.$slots.default.map(child => {
-      if (child &&
-        child.componentOptions &&
-        child.componentOptions.tag === 'md-topbar-nav' &&
-        !child.context.$slots.brand) {
-        return cloneElement(child, h, {
-          brandNode
-        });
-      } else {
-        return child;
-      }
-    });
 
     return (
       <div
@@ -78,7 +54,7 @@ export default {
       >
         <div class={`${topBarClass}__container`}>
           {brandNode}
-          {injectChildren}
+          {this.$slots.default}
         </div>
       </div>
     );

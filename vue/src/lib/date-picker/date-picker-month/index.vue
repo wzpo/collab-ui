@@ -5,7 +5,7 @@ import {
   getStartOfMonth,
   getStartOfWeek,
   isSameMonth,
-} from '../utils/dateUtils.js';
+} from '../../utils/dateUtils.js';
 import moment from 'moment';
 
 export default {

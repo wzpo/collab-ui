@@ -1,5 +1,5 @@
 <script>
-import { addDays, getStartOfWeek } from '../utils/dateUtils.js';
+import { addDays, getStartOfWeek } from '../../utils/dateUtils.js';
 import moment from 'moment';
 
 export default {

@@ -18,25 +18,15 @@
         </md-button>
       </div>
     </md-topbar-right>
-    <md-topbar-mobile :shouldCloseOnClick="false">
-      <template v-slot:brand>
-        <a
-          href="javascript:void(0)"
-          title="Momentum UI"
-        >
-          <md-icon name="cisco-logo" :size="32" />
-        </a>
-      </template>
+    <md-topbar-mobile :shouldCloseOnClick="false">      
       <md-list-item>Develop</md-list-item>
       <md-list-item>Styles</md-list-item>
       <md-list-item>Layout</md-list-item>
       <md-list-item>Navigation</md-list-item>
-
     </md-topbar-mobile>
     
-    <template v-slot:brandAnchor>
+    <template v-slot:brand>
       <a
-        slot="brandAnchor"
         href="javascript:void(0)"
         title="Momentum UI"
       >

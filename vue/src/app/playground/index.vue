@@ -32,17 +32,21 @@
       <div class="gap" />
       <ExampleDataTableMultiSelectResizeScroll />
       
-      -->
       
-      
-      <div class="gap" />
-      <ExampleTopbarLight />
       <div class="gap" />
       <ExampleTopbarDark />
       <div class="gap" />
       <ExampleTopbarBlue />
       <div class="gap" />
       <ExampleTopbarNoMiddle />
+      -->
+      <div class="gap" />
+      <ExampleTimePickerDefault />
+      <div class="gap" />
+      <ExampleTimePicker30MinuteStep />
+      
+      
+      
 
     </div>
   </div>

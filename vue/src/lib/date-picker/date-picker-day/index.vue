@@ -28,7 +28,7 @@ import {
   isDayDisabled,
   isSameDay,
   now,
-} from '../utils/dateUtils.js';
+} from '../../utils/dateUtils.js';
 import moment from 'moment';
 
 export default {

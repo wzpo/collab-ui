@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import DatePickerDay from '../index.vue';
-import Button from '../../button/index.vue';
+import Button from '../../../button/index.vue';
 import Vue from 'vue';
 import moment from 'moment-timezone';
 

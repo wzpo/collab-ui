@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils';
 import DatePickerMonth from '../index.vue';
 import DatePickerDay from '../../date-picker-day/index.vue';
 import DatePickerWeek from '../../date-picker-week/index.vue';
-import Button from '../../button/index.vue';
+import Button from '../../../button/index.vue';
 import Vue from 'vue';
 import moment from 'moment-timezone';
 
