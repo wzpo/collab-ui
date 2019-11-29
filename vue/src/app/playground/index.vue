@@ -41,11 +41,14 @@
       <ExampleTopbarNoMiddle />
       -->
       <div class="gap" />
-      <ExampleTimePickerDefault />
+      <ExampleSidebarDefault />
       <div class="gap" />
-      <ExampleTimePicker30MinuteStep />
-      
-      
+      <ExampleSidebarDark />
+      <div class="gap" />
+      <ExampleSidebarPageLevel />
+      <div class="gap" />
+      <ExampleSidebarWithIcons />
+     
       
 
     </div>

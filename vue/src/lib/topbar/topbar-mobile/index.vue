@@ -1,6 +1,4 @@
 <script>
-import cloneElement from '../../utils/cloneElement';
-
 export default {
   name: 'md-topbar-mobile',
 

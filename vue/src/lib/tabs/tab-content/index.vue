@@ -1,5 +1,5 @@
 <script>
-import cloneElement from '../utils/cloneElement';
+import cloneElement from '../../utils/cloneElement';
 
 export default {
   name: 'md-tab-content',
