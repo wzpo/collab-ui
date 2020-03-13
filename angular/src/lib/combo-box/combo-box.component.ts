@@ -60,6 +60,8 @@ export interface ComboBoxOffset {
           [(ngModel)]="inputValue"
           [placeholder]="placeholder"
           (input)="onInputChange($event)"
+          (focus)="onInputFocus()"
+          (blur)="onInputBlur()"
         >
         <md-input-section *ngIf="hasSearchIcon">
           <md-icon name="search_20"></md-icon>
@@ -158,6 +160,7 @@ export class ComboBoxComponent implements OnInit, OnDestroy, ControlValueAccesso
 
   private readonly _destroy = new Subject<void>();
   private _document: Document;
+  private _inputFocus: Boolean = false;
   private _inputValue: string = '';
   private _mutationObserver: MutationObserver;
   private _value: Object | string = '';
@@ -207,7 +210,7 @@ export class ComboBoxComponent implements OnInit, OnDestroy, ControlValueAccesso
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.options) {
+    if (changes.options && this._inputFocus) {
       this.handleInput();
     }
   }
@@ -250,7 +253,6 @@ export class ComboBoxComponent implements OnInit, OnDestroy, ControlValueAccesso
   }
 
   handleInput(): void {
-    console.log(this.options);
     this._shouldUpdatePosition = true;
     this.filteredOptions = isObject(this.value)
       ? this.applyFilter(this.value[this.searchProp])
@@ -359,6 +361,14 @@ export class ComboBoxComponent implements OnInit, OnDestroy, ControlValueAccesso
   onInputChange(event): void {
     this.handleInput();
     this.inputValueChange.emit(event.target.value);
+  }
+
+  onInputFocus(): void {
+    this._inputFocus = true;
+  }
+
+  onInputBlur(): void {
+    this._inputFocus = false;
   }
 
   handleKeydown(event: KeyboardEvent): void {
