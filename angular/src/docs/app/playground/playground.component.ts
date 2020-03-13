@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
         <h1>Angular Playground</h1>
         <div class="docs-container">
           <!-- Insert Example Here -->
+          <example-combo-box-clear></example-combo-box-clear>
         </div>
       </article>
     </div>

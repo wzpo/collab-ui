@@ -12,6 +12,7 @@ import {
   OnDestroy,
   Output,
   Provider,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
@@ -205,6 +206,12 @@ export class ComboBoxComponent implements OnInit, OnDestroy, ControlValueAccesso
     this.isObject = isObject;
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.options) {
+      this.handleInput();
+    }
+  }
+
   ngOnDestroy() {
     this._destroy.next();
     this._destroy.complete();
@@ -243,6 +250,7 @@ export class ComboBoxComponent implements OnInit, OnDestroy, ControlValueAccesso
   }
 
   handleInput(): void {
+    console.log(this.options);
     this._shouldUpdatePosition = true;
     this.filteredOptions = isObject(this.value)
       ? this.applyFilter(this.value[this.searchProp])
